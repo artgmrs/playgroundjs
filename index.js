@@ -4,31 +4,24 @@
  * @return {boolean}
  */
 var canConstruct = (ransomNote, magazine) => {
-  if (!magazine) return false;
+  const ransomNoteArray = ransomNote.split('');
+  const magazineArray = magazine.split('');
 
-  const arrayRansomNote = ransomNote.split('');
-  const arrayMagazine = magazine.split('');
+  for (let i = 0; i < ransomNoteArray.length; i++) {
+    const indexInMagazine = magazineArray.indexOf(ransomNoteArray[i]);
 
-  let remainingLetters = [...arrayRansomNote];
-
-  for (let i = 0; i < arrayRansomNote.length; i++) {
-    let existsInMagazine = arrayMagazine.indexOf(arrayRansomNote[i]);
-
-    if (existsInMagazine >= 0) {
-      arrayMagazine.splice(i, 1);
-
-      let index = remainingLetters.indexOf(arrayRansomNote[i])
-      remainingLetters.splice(index, 1);
+    if (indexInMagazine === -1) {
+      return false;
     }
+
+    magazineArray.splice(indexInMagazine, 1);
   }
 
-  if (Array.isArray(remainingLetters) && !remainingLetters.length) return true;
-
-  return false;
+  return true;
 };
 
-const ransom = 'aa';
-const magazine = 'aab';
+const ransom = 'aab';
+const magazine = 'baa';
 let result = canConstruct(ransom, magazine);
 
 console.log('Result: ', result)
